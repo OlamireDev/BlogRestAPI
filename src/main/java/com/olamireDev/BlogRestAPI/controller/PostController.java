@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value ="/blog")
@@ -38,6 +37,7 @@ public class PostController {
 
     @GetMapping(value = "info/{id}")
     public Post getBlog(@PathVariable ("id") Long id){
+        System.out.println("for debuggin");
         return  postService.getPost(id);
     }
     @ResponseStatus(HttpStatus.OK)
