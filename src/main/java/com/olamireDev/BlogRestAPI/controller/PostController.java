@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequestMapping(value ="/blog")
 public class PostController {
 
-    private PostService postService;
+    private final PostService postService;
 
     public PostController(PostServiceImpl postService){
         this.postService = postService;
@@ -37,8 +37,8 @@ public class PostController {
     }
 
     @GetMapping(value = "info/{id}")
-    public Optional<Post> getBlog(@PathVariable ("id") String id){
-        return  postService.getPost(Long.valueOf(id));
+    public Post getBlog(@PathVariable ("id") Long id){
+        return  postService.getPost(id);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "info/{id}")
@@ -48,8 +48,12 @@ public class PostController {
     }
     @ResponseStatus(HttpStatus.GONE)
     @DeleteMapping(value = "info/{id}")
-    public void deleteBlog(@PathVariable ("id") String id){
-        postService.delete(Long.valueOf(id));
+    public void deleteBlog(@PathVariable ("id") Long id){
+        postService.delete(id);
     }
 
+    @GetMapping(value ="/search={word}")
+    public Iterable<Post> searchComments(@PathVariable("word") String word){
+        return postService.search(word);
+    }
 }

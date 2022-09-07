@@ -9,11 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    private CommentRepository commentRepository;
+    private final CommentRepository commentRepository;
+
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository){
+    public CommentServiceImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
+
     @Override
     public Iterable<Comment> getPostComment(Long id) {
         return commentRepository.findAllByPostId(id);
@@ -26,8 +28,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void editComment(Comment comment) {
-        if(comment.getContent().length() > 0) {
-            Comment oldComment =  getComment(comment.getId());
+        if (comment.getContent().length() > 0) {
+            Comment oldComment = getComment(comment.getId());
             oldComment.setContent(comment.getContent());
             commentRepository.save(oldComment);
         }
@@ -43,5 +45,10 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(comment);
     }
 
+    @Override
+    public Iterable<Comment> searchComment(String keyWord) {
+        return commentRepository.findCommentsByContentContainingIgnoreCase(keyWord);
+    }
 
 }
+

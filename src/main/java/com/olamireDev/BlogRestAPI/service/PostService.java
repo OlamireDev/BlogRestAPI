@@ -1,42 +1,26 @@
 package com.olamireDev.BlogRestAPI.service;
 
 import com.olamireDev.BlogRestAPI.model.Post;
-import com.olamireDev.BlogRestAPI.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public abstract class PostService {
-
-    public  PostRepository postRepository;
-
-    @Autowired
-    public PostService(PostRepository postRepository){
-        this.postRepository = postRepository;
-    }
+public interface PostService {
 
 
+    List<Post> getAllPost();
 
-    public List<Post> getAllPost(){
-        return  null;
-    }
+    List<Post>  getCategoryPost(String cat);
 
-    public List<Post>  getCategoryPost(String cat){
-        return null;
-    }
+    Post getPost(Long id);
 
-    public Optional<Post> getPost(Long id){
-        return null;
-    }
+    void create(Post post);
 
-    public void create(Post post) {
-    }
+    void updatePost(Post post);
 
-    public void updatePost(Post post){}
+    void delete(Long id);
 
-    public void delete(Long id) {
-    }
+    Iterable<Post> search(String keyWord);
 }

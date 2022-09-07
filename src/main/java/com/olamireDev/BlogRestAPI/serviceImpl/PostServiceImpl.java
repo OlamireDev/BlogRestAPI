@@ -3,20 +3,16 @@ package com.olamireDev.BlogRestAPI.serviceImpl;
 import com.olamireDev.BlogRestAPI.model.Post;
 import com.olamireDev.BlogRestAPI.repository.PostRepository;
 import com.olamireDev.BlogRestAPI.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PostServiceImpl extends PostService {
+public class PostServiceImpl implements PostService {
 
 
-    @Autowired
-    public PostServiceImpl(PostRepository postRepository) {
-        super(postRepository);
-    }
+   PostRepository postRepository;
 
     @Override
     public List<Post> getAllPost() {
@@ -29,8 +25,8 @@ public class PostServiceImpl extends PostService {
     }
 
     @Override
-    public Optional<Post> getPost(Long id) {
-        return Optional.ofNullable(postRepository.findById(id).orElse(null));
+    public Post getPost(Long id) {
+        return postRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -39,7 +35,7 @@ public class PostServiceImpl extends PostService {
     }
 
     public void updatePost(Post post){
-       Post newPost =postRepository.findById(post.getId()).orElse(null);//throw error
+       Post newPost =postRepository.findById(post.getId()).orElse(null);//throw execption
         if(post.getTitle().length() > 0){
             newPost.setId(post.getId());
         }
@@ -56,5 +52,10 @@ public class PostServiceImpl extends PostService {
     @Override
     public void delete(Long id) {
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public Iterable<Post> search(String keyWord) {
+       return postRepository.findPostByTitleContainsIgnoreCase(keyWord);
     }
 }
