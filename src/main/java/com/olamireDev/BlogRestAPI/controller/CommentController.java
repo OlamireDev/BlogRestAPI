@@ -2,24 +2,26 @@ package com.olamireDev.BlogRestAPI.controller;
 
 import com.olamireDev.BlogRestAPI.model.Comment;
 import com.olamireDev.BlogRestAPI.service.CommentService;
-import com.olamireDev.BlogRestAPI.serviceImpl.CommentServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/comment")
 public class CommentController {
     CommentService commentService;
 
-    @GetMapping(value ="s/{id}") //get all comments related to a post id
-    public Iterable<Comment> getPostComments(@PathVariable("id") String id){
-        return commentService.getPostComment(Long.valueOf(id));
+    @GetMapping(value ="/s/{id}") //get all comments related to a post id
+    public Iterable<Comment> getPostComments(@PathVariable("id") Long id){
+        return commentService.getPostComment(id);
     }
 
     @GetMapping(value = "/{id}") //get a particular comment
     public Comment getComment(@PathVariable("id") Long id){
         return commentService.getComment(id);
     }
+
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping(value = "/{id}")
     public void EditComment(@RequestBody Comment comment, @PathVariable("id") Long id){

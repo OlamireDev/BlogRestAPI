@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class LikeServiceImpl implements LikeService {
 
-    LikeRepository likeRepository;
+    private final LikeRepository likeRepository;
 
     @Override
     public Long getLikeCount(Long id) {

@@ -2,21 +2,19 @@ package com.olamireDev.BlogRestAPI.controller;
 
 import com.olamireDev.BlogRestAPI.model.Post;
 import com.olamireDev.BlogRestAPI.service.PostService;
-import com.olamireDev.BlogRestAPI.serviceImpl.PostServiceImpl;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping(value ="/blog")
 public class PostController {
 
-    private final PostService postService;
+    private PostService postService;
 
-    public PostController(PostServiceImpl postService){
-        this.postService = postService;
-    }
 
     @GetMapping(value  = "")
     public List<Post> getAllBlogs(){

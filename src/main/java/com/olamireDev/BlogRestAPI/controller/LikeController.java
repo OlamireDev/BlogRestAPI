@@ -2,15 +2,17 @@ package com.olamireDev.BlogRestAPI.controller;
 
 import com.olamireDev.BlogRestAPI.model.Like;
 import com.olamireDev.BlogRestAPI.service.LikeService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/like")
 public class LikeController {
-    LikeService likeService;
+    private final LikeService likeService;
 
-    @GetMapping(value = "s/{id}")
+    @GetMapping(value = "/s/{id}")
     public Long getLikes(@PathVariable("id") Long id){
         return likeService.getLikeCount(id);
     }

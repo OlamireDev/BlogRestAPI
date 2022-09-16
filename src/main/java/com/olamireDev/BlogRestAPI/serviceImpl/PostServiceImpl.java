@@ -1,18 +1,21 @@
 package com.olamireDev.BlogRestAPI.serviceImpl;
 
+import com.olamireDev.BlogRestAPI.exceptions.PostNotFound;
 import com.olamireDev.BlogRestAPI.model.Post;
 import com.olamireDev.BlogRestAPI.repository.PostRepository;
 import com.olamireDev.BlogRestAPI.service.PostService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@AllArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
 
 
-   PostRepository postRepository;
+
+   private final PostRepository postRepository;
 
     @Override
     public List<Post> getAllPost() {
@@ -26,18 +29,18 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post getPost(Long id) {
-        return postRepository.findById(id).orElse(null);
+        return postRepository.findById(id).orElseThrow(() -> new PostNotFound("The post you want to retrieve or edit does no exist"));
     }
-
     @Override
     public void create(Post post) {
         postRepository.save(post);
     }
 
     public void updatePost(Post post){
-       Post newPost =postRepository.findById(post.getId()).orElse(null);//throw execption
+       Post newPost =postRepository.findById(post.getId()).orElseThrow(()
+               -> new PostNotFound("The post you want to retrieve or edit does no exist"));
         if(post.getTitle().length() > 0){
-            newPost.setId(post.getId());
+            newPost.setTitle(post.getTitle());
         }
         if(post.getContent().length() > 0){
             newPost.setContent(post.getContent());
